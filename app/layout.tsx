@@ -1,15 +1,7 @@
 import type React from "react"
-import type { Metadata } from "next"
-import { Inter } from "next/font/google"
-import "./globals.css"
-
-const inter = Inter({ subsets: ["latin"] })
-
-export const metadata: Metadata = {
-  title: "Gerenciador de Tarefas",
-  description: "Sistema de gerenciamento de tarefas para Victor e Lucas",
-    generator: 'v0.dev'
-}
+import "@/app/globals.css"
+import { ThemeProvider } from "@/components/theme-provider"
+import { Sidebar } from "@/components/sidebar"
 
 export default function RootLayout({
   children,
@@ -17,10 +9,21 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="pt-BR">
-      <body className={inter.className}>
-        <main className="min-h-screen bg-background">{children}</main>
+    <html lang="pt-BR" suppressHydrationWarning>
+      <body className="min-h-screen bg-background">
+        <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
+          <div className="flex">
+            <Sidebar />
+            <div className="flex-1 md:ml-64">
+              <main className="container p-8">{children}</main>
+            </div>
+          </div>
+        </ThemeProvider>
       </body>
     </html>
   )
 }
+
+export const metadata = {
+      generator: 'v0.dev'
+    };
